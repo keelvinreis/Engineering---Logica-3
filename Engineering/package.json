@@ -1,0 +1,11 @@
+{
+  "name": "engineering",
+  "version": "1.0.0",
+  "description": "Com base no JSON, irei validar através do INPUT do SERVIÇO-00 a saída parâmeto OUTPUT do SERVIÇO-01 para realizar",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kelvin Reis C",
+  "license": "ISC"
+}

@@ -5,7 +5,7 @@ Este teste lógico é projetado para garantir que os serviços corretos sejam ex
 1. [index.js](https://github.com/keelvinreis/Engineering---Logica-3/blob/main/Engineering/index.js)
 2. [index.py](https://github.com/keelvinreis/Engineering---Logica-3/blob/main/Engineering/index.py)
 
-## Saida (Node index.js)Lista de serviços executados: 
+## Saida (Node / index.js e Python / index.py )Lista de serviços executados: 
 
 - SERVIÇO-01  
 - SERVIÇO-03 

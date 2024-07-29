@@ -27,6 +27,7 @@ const validActions = new Set([
 const intputServicoS00 = {
   channel: "NAVEGADOR",
   customer: {
+    //customer: {billingProfile{}}
     type: "PF",
     socialSec: "999999999999",
     name: "JOAO DA SILVA",
@@ -76,27 +77,47 @@ const outPutServicoS01 = {
   },
   flag: "ON",
 };
-
+const { customer, status, flag } = outPutServicoS01;
+const {
+  quote: { newAction, number },
+  score,
+  validation,
+} = customer;
 // Dados de outPutServicoS01
-const newAction = outPutServicoS01.customer.quote.newAction;
-const CustumerValidation = outPutServicoS01.customer.validation;
+
 const quoteType = outPutServicoS01.customer.quote.type;
 
-// Dados de intputServicoS00
-const channel = intputServicoS00.customer.quote.pdv.channel;
-const action = intputServicoS00.customer.quote.action;
-const portNum = intputServicoS00.customer.quote.portNum;
-const msisdn = intputServicoS00.customer.quote.msisdn;
-const simulation = intputServicoS00.customer.quote.simulation;
-const iccid = intputServicoS00.customer.quote.iccid;
-const idProfile = intputServicoS00.customer.billingProfile.id;
-const segment = intputServicoS00.customer.quote.segment;
-const option = intputServicoS00.customer.quote.optin.option;
-const printType = intputServicoS00.customer.quote.printType;
-const accessType = intputServicoS00.customer.billingProfile.accessType;
-const CustumerType = intputServicoS00.customer.type;
-const shippingType = intputServicoS00.customer.quote.shippingType;
+//Destructuring - macro jsonInput: {custumer{},channel}
+const { customer: customerInput, channel } = intputServicoS00;
 
+//Destructuring - customer: {billingProfile{}}
+const {
+  type,
+  socialSec,
+  name,
+  country,
+  birthDate,
+  sex,
+  email,
+  telephoneNumber,
+  billingProfile: { id, accessType },
+} = customerInput;
+//Destructuring - custumer:{quote: {optin{}}}
+const {
+  quote: {
+    msisdn,
+    portNum,
+    iccid,
+    segment,
+    action,
+    ddd,
+    simulation,
+    shippingType,
+    printType,
+    optin: { option },
+  },
+} = customerInput;
+// Serviços a serem executados
 function servico_01() {
   console.log("SERVIÇO-01");
 }
@@ -143,12 +164,13 @@ function servico_15() {
   console.log("SERVIÇO-15");
 }
 
-// Valida a ausência e presença
+// Valida a ausência e presença de "valor"
 function validCampo(campo) {
   return campo !== undefined && campo !== null && campo.trim() !== "";
 }
 
-// Função para validar se a ação está entre as válidas ou canceladas
+// Função para validar se "AtivarAcesso" se encontra valido
+//cancelActions é acionado se o parametro é de "cancelar"
 function veryAcess(params) {
   return validActions.has(params) || cancelActions.has(params);
 }
@@ -179,10 +201,10 @@ function scope_3() {
 
   if (validCampo(iccid) && validCampo(msisdn)) {
     servico_08();
-    if (veryAcess(newAction) && CustumerValidation === "OK") {
+    if (veryAcess(newAction) && validation === "OK") {
       servico_09();
     }
-    if (idProfile === "11") {
+    if (id === "11") {
       servico_10();
     } else if (segment !== "PRE_PAGO" || action !== "Cancelar4") {
       servico_11();
@@ -194,7 +216,7 @@ function scope_3() {
     simulation === "false" &&
     (option === "SIM" ||
       printType === "N" ||
-      (accessType !== "Móvel" && CustumerType === "PF"))
+      (accessType !== "Móvel" && type === "PF"))
   ) {
     servico_12();
   } else {
